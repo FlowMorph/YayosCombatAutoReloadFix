@@ -2,6 +2,8 @@
 
 一个面向 RimWorld 1.6 的小型兼容补丁，作者为 [FlowMorph](https://github.com/FlowMorph)。
 
+[Steam 创意工坊](https://steamcommunity.com/sharedfiles/filedetails/?id=3799056644) · [GitHub Releases](https://github.com/FlowMorph/YayosCombatAutoReloadFix/releases)
+
 ## 中文说明
 
 Yayo's Combat 3 - Addon 1.6.11 删除了 1.6.10 中挂在 `CompApparelReloadable.UsedOnce` 后的自动换弹调用。这个变化会导致两类回归：
