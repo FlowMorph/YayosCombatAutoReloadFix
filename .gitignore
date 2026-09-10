@@ -1,0 +1,6 @@
+Source/bin/
+Source/obj/
+Source/References/*.dll
+dist/
+*.user
+*.suo

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Yayo's Combat 3 - Auto Reload Regression Fix</name>
+  <author>FlowMorph</author>
+  <packageId>FlowMorph.YayosCombatAutoReloadFix</packageId>
+  <url>https://github.com/FlowMorph/YayosCombatAutoReloadFix</url>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>Mlie.YayosCombat3</packageId>
+      <displayName>Yayo's Combat 3 (Continued)</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2854006492</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>Syrus.YayosCombatAddon</packageId>
+      <displayName>Yayo's Combat 3 - Addon</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2796514196</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>Mlie.YayosCombat3</li>
+    <li>Syrus.YayosCombatAddon</li>
+  </loadAfter>
+  <description>
+恢复 Yayo's Combat 3 - Addon 1.6.10 中存在、在 1.6.11 被删除的 UsedOnce 自动换弹触发。
+
+修复敌对 Pawn 背包中有弹药却不换弹，以及开启 refillMechAmmo 时非 Humanlike Pawn 打空后无法自动补弹的问题。补丁只恢复 Addon 原有调用，不增加额外 AI 或 ThinkTree 逻辑。
+
+Restores the UsedOnce auto-reload trigger present in Yayo's Combat 3 - Addon 1.6.10 and removed in 1.6.11.
+
+Fixes hostile pawns failing to reload from inventory and non-Humanlike pawns failing to receive the existing refillMechAmmo behavior after emptying a weapon. This patch only restores the Addon's original call path; it adds no new AI or ThinkTree logic.
+  </description>
+</ModMetaData>
