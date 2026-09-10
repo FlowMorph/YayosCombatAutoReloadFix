@@ -3,6 +3,7 @@
   <name>Yayo's Combat 3 - Auto Reload Regression Fix</name>
   <author>FlowMorph</author>
   <packageId>FlowMorph.YayosCombatAutoReloadFix</packageId>
+  <modVersion>1.0.0</modVersion>
   <url>https://github.com/FlowMorph/YayosCombatAutoReloadFix</url>
   <supportedVersions>
     <li>1.6</li>
