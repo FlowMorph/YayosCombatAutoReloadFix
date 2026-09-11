@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <YCAARF.SettingsCategory>Yayo 自动换弹修复</YCAARF.SettingsCategory>
+  <YCAARF.EnableNpcEmptyWeaponRetry>启用 NPC 空枪换弹重试</YCAARF.EnableNpcEmptyWeaponRetry>
+  <YCAARF.EnableNpcEmptyWeaponRetry.Description>默认开启。非玩家阵营 Pawn 的主武器为空且背包中有足量匹配弹药时，每隔约 2～3 秒尝试从背包换弹。检查会按 Pawn 错峰执行。</YCAARF.EnableNpcEmptyWeaponRetry.Description>
+</LanguageData>

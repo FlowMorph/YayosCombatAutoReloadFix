@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <YCAARF.SettingsCategory>Yayo Auto Reload Fix</YCAARF.SettingsCategory>
+  <YCAARF.EnableNpcEmptyWeaponRetry>Enable NPC empty-weapon reload retry</YCAARF.EnableNpcEmptyWeaponRetry>
+  <YCAARF.EnableNpcEmptyWeaponRetry.Description>Enabled by default. Every 2–3 seconds, staggered per pawn, non-player pawns with an empty primary weapon and enough matching inventory ammunition attempt to reload from inventory.</YCAARF.EnableNpcEmptyWeaponRetry.Description>
+</LanguageData>

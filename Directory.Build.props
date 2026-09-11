@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ModFileName>YayosCombatAutoReloadFix</ModFileName>
     <ModName>Yayo's Combat 3 - Auto Reload Regression Fix</ModName>
-    <ModVersion>1.0.0</ModVersion>
+    <ModVersion>1.1.0</ModVersion>
     <Repository>https://github.com/FlowMorph/YayosCombatAutoReloadFix</Repository>
   </PropertyGroup>
 </Project>
