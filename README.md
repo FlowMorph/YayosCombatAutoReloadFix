@@ -13,7 +13,7 @@ Yayo's Combat 3 - Addon 1.6.11 删除了 1.6.10 中挂在 `CompApparelReloadable
 
 本补丁恢复 1.6.10 的这条调用路径，继续复用 Addon 自己的 `ReloadUtility.TryAutoReloadSingle`、库存弹药与 `refillMechAmmo` 逻辑。
 
-另外提供默认开启的“NPC 空枪换弹重试”设置。非玩家阵营 Pawn 的主武器为空、背包中存在足量匹配弹药且当前没有换弹时，会按照每个 Pawn 各自的 120～180 ticks 周期再次尝试从背包换弹。检查时刻通过 Pawn ID 确定性错开，只检查主武器与背包，不搜索地图弹药，也不修改 AI 或 ThinkTree。玩家阵营 Pawn 不执行这项周期检查。
+另外提供默认开启的“NPC 空枪换弹重试”设置。非玩家人类 Pawn，以及玩家控制的非 Humanlike Pawn，在主武器为空或换弹被中断后，会按照每个 Pawn 各自的 120～180 ticks 周期进行定向检查。背包中存在足量匹配弹药时恢复 Addon 的实体换弹；开启 `refillMechAmmo` 的非 Humanlike Pawn 使用临时虚拟补弹，补弹成功后补满武器，被打断时不会生成或掉落弹药。检查时刻通过 Pawn ID 确定性错开，只检查主武器与背包，不搜索地图弹药，也不修改 AI 或 ThinkTree。玩家人类殖民者不执行这项周期检查。
 
 ### 依赖与加载顺序
 
@@ -36,7 +36,7 @@ This is a small compatibility patch for RimWorld 1.6. Yayo's Combat 3 - Addon 1.
 
 The patch restores the 1.6.10 call path and delegates immediate reload behavior to the Addon's existing `ReloadUtility.TryAutoReloadSingle`, inventory-ammo, and `refillMechAmmo` implementations.
 
-It also adds an optional NPC empty-weapon reload retry, enabled by default. Non-player pawns with an empty primary weapon and enough matching inventory ammunition retry every 120–180 ticks. Checks are deterministically staggered per pawn, inspect only the primary weapon and inventory, never search the map for ammunition, and do not modify AI or ThinkTrees. Player-faction pawns are excluded from this periodic check.
+It also adds an optional empty-weapon reload retry, enabled by default. Non-player humanlike pawns and player-controlled non-Humanlike pawns retry every 120–180 ticks after an empty weapon or interrupted reload. Real matching inventory ammunition uses the Addon's reload job; non-Humanlike pawns with `refillMechAmmo` use a temporary virtual refill that fills the weapon on completion and leaves no dropped ammunition when interrupted. Checks are deterministically staggered per pawn, inspect only the primary weapon and inventory, never search the map for ammunition, and do not modify AI or ThinkTrees. Player humanlike colonists are excluded from this periodic check.
 
 Load it after Harmony, Yayo's Combat 3 (Continued), and Yayo's Combat 3 - Addon.
 

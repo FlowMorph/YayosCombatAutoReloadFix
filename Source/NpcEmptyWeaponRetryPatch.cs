@@ -16,7 +16,7 @@ namespace YayosCombatAutoReloadFix
         {
             if (!AutoReloadFixMod.CurrentSettings.EnableNpcEmptyWeaponRetry
                 || !yayoCombat.YayoCombatCore.ammo
-                || __instance.Faction == Faction.OfPlayer
+                || (__instance.Faction == Faction.OfPlayer && __instance.RaceProps.Humanlike)
                 || !__instance.Spawned
                 || __instance.equipment == null
                 || __instance.inventory == null)
@@ -35,15 +35,24 @@ namespace YayosCombatAutoReloadFix
 
             var primary = __instance.equipment.Primary;
             var comp = primary?.TryGetComp<CompApparelReloadable>();
-            if (comp == null
-                || comp.RemainingCharges > 0
-                || !AmmoUtility.IsAmmo(comp.AmmoDef)
-                || __instance.CountAmmoInInventory(comp) < comp.MinAmmoNeededChecked())
+            if (comp == null || !AmmoUtility.IsAmmo(comp.AmmoDef))
             {
                 return;
             }
 
-            ReloadUtility.TryReloadFromInventory(__instance, new[] { primary }, false);
+            var retryingPartialReload = ReloadRetryRegistry.IsPending(__instance, primary)
+                && comp.RemainingCharges < comp.MaxCharges;
+            if (comp.RemainingCharges > 0 && !retryingPartialReload)
+                return;
+
+            if (__instance.CountAmmoInInventory(comp) >= comp.MinAmmoNeededChecked())
+            {
+                if (ReloadUtility.TryReloadFromInventory(__instance, new[] { primary }, false))
+                    ReloadRetryRegistry.Clear(__instance, primary);
+                return;
+            }
+
+            VirtualRefillUtility.TryStart(comp);
         }
 
         private static bool IsReloadJob(JobDef jobDef)
@@ -51,7 +60,8 @@ namespace YayosCombatAutoReloadFix
             var defName = jobDef?.defName;
             return defName == "YCA_ReloadFromInventory"
                 || defName == "YCA_ReloadFromSurrounding"
-                || defName == "Reload";
+                || defName == "Reload"
+                || VirtualRefillUtility.IsVirtualReloadJob(jobDef);
         }
     }
 }

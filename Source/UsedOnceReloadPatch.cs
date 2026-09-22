@@ -10,6 +10,7 @@ namespace YayosCombatAutoReloadFix
     {
         static PatchBootstrap()
         {
+            VirtualRefillJobDefOf.Initialize();
             new Harmony("local.YayosCombatAutoReloadFix").PatchAll();
         }
     }
