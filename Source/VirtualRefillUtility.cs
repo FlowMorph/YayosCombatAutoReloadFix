@@ -106,7 +106,7 @@ namespace YayosCombatAutoReloadFix
         {
             var comp = weapon?.TryGetComp<CompApparelReloadable>();
             if (pawn == null
-                || !IsVirtualRefillCase(comp)
+                || !IsVirtualRefillPawn(comp)
                 || comp.RemainingCharges >= comp.MaxCharges)
             {
                 return;
@@ -140,15 +140,21 @@ namespace YayosCombatAutoReloadFix
         internal static bool IsVirtualRefillCase(CompApparelReloadable comp)
         {
             var pawn = comp?.Wearer as Pawn;
+            return IsVirtualRefillPawn(comp)
+                && comp.RemainingCharges < comp.MaxCharges
+                && (comp.RemainingCharges <= 0 || ReloadRetryRegistry.IsPending(pawn, comp.parent))
+                && pawn.CountAmmoInInventory(comp) < comp.MinAmmoNeededChecked();
+        }
+
+        private static bool IsVirtualRefillPawn(CompApparelReloadable comp)
+        {
+            var pawn = comp?.Wearer as Pawn;
             return comp != null
                 && pawn != null
-                && comp.RemainingCharges < comp.MaxCharges
                 && !pawn.RaceProps.Humanlike
                 && yayoCombat.YayoCombatCore.refillMechAmmo
                 && AmmoUtility.IsAmmo(comp.AmmoDef)
-                && pawn.IsCapableOfReloading()
-                && (comp.RemainingCharges <= 0 || ReloadRetryRegistry.IsPending(pawn, comp.parent))
-                && pawn.CountAmmoInInventory(comp) < comp.MinAmmoNeededChecked();
+                && pawn.IsCapableOfReloading();
         }
 
         internal static bool IsVirtualReloadJob(JobDef jobDef) =>
