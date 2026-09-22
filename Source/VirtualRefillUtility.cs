@@ -75,17 +75,21 @@ namespace YayosCombatAutoReloadFix
 
             var virtualComp = pawn.GetAllReloadableThings()
                 .Select(thing => thing.TryGetComp<CompApparelReloadable>())
-                .FirstOrDefault(IsVirtualRefillCase);
+                // TryAutoReloadAll 已经经过 Addon 的低弹检查；这里接管所有
+                // refillMechAmmo 低弹情况，避免继续落入实体弹药生成分支。
+                .FirstOrDefault(comp => IsVirtualRefillCase(comp, allowLowAmmo: true));
             if (virtualComp == null)
                 return false;
 
-            result = TryStart(virtualComp);
+            result = TryStart(virtualComp, allowLowAmmo: true);
             return true;
         }
 
-        internal static bool TryStart(CompApparelReloadable comp)
+        internal static bool TryStart(CompApparelReloadable comp) => TryStart(comp, allowLowAmmo: false);
+
+        private static bool TryStart(CompApparelReloadable comp, bool allowLowAmmo)
         {
-            if (!IsVirtualRefillCase(comp))
+            if (!IsVirtualRefillCase(comp, allowLowAmmo))
                 return false;
 
             var pawn = comp.Wearer as Pawn;
@@ -138,11 +142,16 @@ namespace YayosCombatAutoReloadFix
         }
 
         internal static bool IsVirtualRefillCase(CompApparelReloadable comp)
+            => IsVirtualRefillCase(comp, allowLowAmmo: false);
+
+        private static bool IsVirtualRefillCase(CompApparelReloadable comp, bool allowLowAmmo)
         {
             var pawn = comp?.Wearer as Pawn;
             return IsVirtualRefillPawn(comp)
                 && comp.RemainingCharges < comp.MaxCharges
-                && (comp.RemainingCharges <= 0 || ReloadRetryRegistry.IsPending(pawn, comp.parent))
+                && (allowLowAmmo
+                    || comp.RemainingCharges <= 0
+                    || ReloadRetryRegistry.IsPending(pawn, comp.parent))
                 && pawn.CountAmmoInInventory(comp) < comp.MinAmmoNeededChecked();
         }
 

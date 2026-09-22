@@ -3,7 +3,7 @@
   <name>Yayo's Combat 3 - Auto Reload Regression Fix</name>
   <author>FlowMorph</author>
   <packageId>FlowMorph.YayosCombatAutoReloadFix</packageId>
-  <modVersion>1.2.0</modVersion>
+  <modVersion>1.3.0</modVersion>
   <url>https://github.com/FlowMorph/YayosCombatAutoReloadFix</url>
   <supportedVersions>
     <li>1.6</li>
@@ -37,7 +37,7 @@ https://github.com/FlowMorph/YayosCombatAutoReloadFix
 
 恢复 Yayo's Combat 3 - Addon 1.6.10 中存在、在 1.6.11 被删除的 UsedOnce 自动换弹触发。
 
-修复 NPC 背包中有匹配弹药却不换弹，以及开启 refillMechAmmo 时非 Humanlike Pawn 打空后无法自动补弹的问题。
+修复 NPC 背包中有匹配弹药却不换弹，以及开启 refillMechAmmo 时非 Humanlike Pawn 低弹或打空后无法自动补弹的问题。接管 Addon 的低弹自动换弹入口，避免虚拟补弹单位在脚下生成实体弹药。解除 NPC 备弹量 500% 的设置上限。
 
 默认开启“NPC 空枪换弹重试”：非玩家人类 Pawn，以及玩家控制的非 Humanlike Pawn，在主武器为空或换弹被中断后，每隔约 2～3 秒进行一次定向检查。背包中有真实匹配弹药时恢复实体换弹；开启 `refillMechAmmo` 且属于非 Humanlike Pawn 时使用虚拟补弹。虚拟补弹成功后补满武器，被打断时不会生成或掉落弹药。检查按 Pawn 错峰执行，不搜索地图弹药，也不修改 AI 或 ThinkTree。
 
@@ -45,7 +45,7 @@ https://github.com/FlowMorph/YayosCombatAutoReloadFix
 
 Restores the UsedOnce auto-reload trigger present in Yayo's Combat 3 - Addon 1.6.10 and removed in 1.6.11.
 
-Fixes NPCs failing to reload matching ammunition from inventory and non-Humanlike pawns failing to receive the existing refillMechAmmo behavior after emptying a weapon.
+Fixes NPCs failing to reload matching ammunition and non-Humanlike pawns failing to receive the existing refillMechAmmo behavior while low on or out of ammo. Low-ammo refillMechAmmo cases are intercepted before the Addon can create physical fallback ammunition. The NPC carried-ammo setting is no longer capped at 500%.
 
 The optional empty-weapon reload retry is enabled by default. Every 2–3 seconds, staggered per pawn, non-player humanlike pawns and player-controlled non-Humanlike pawns retry a reload after an empty weapon or an interrupted reload. Real matching inventory ammunition uses the Addon reload job; non-Humanlike pawns with `refillMechAmmo` use a temporary virtual refill that fills the weapon on completion and leaves no dropped ammunition when interrupted. It does not search the map for ammunition or modify AI/ThinkTrees.
 

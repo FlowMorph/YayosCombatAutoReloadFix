@@ -12,6 +12,8 @@ namespace YayosCombatAutoReloadFix
         {
             VirtualRefillJobDefOf.Initialize();
             new Harmony("local.YayosCombatAutoReloadFix").PatchAll();
+            // Yayo 会在本程序集安装 Harmony 补丁前应用设置，因此启动时再应用一次无限上限值。
+            YayoCombatCore_EnemyAmmoLimitPatch.ApplyCurrentSetting();
         }
     }
 
